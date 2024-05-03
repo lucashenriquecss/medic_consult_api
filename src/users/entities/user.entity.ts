@@ -1,10 +1,14 @@
+import { DoctorEntity } from 'src/doctors/entities/doctor.entity';
+import { PatientEntity } from 'src/patients/entities/patient.entity';
 import { Roles } from 'src/utils/common/user-roles.enum';
 import {
     Column,
     CreateDateColumn,
     Entity,
+    JoinColumn,
     JoinTable,
     OneToMany,
+    OneToOne,
     PrimaryGeneratedColumn,
     Timestamp,
     UpdateDateColumn,
@@ -25,4 +29,6 @@ export class UserEntity {
     createdAt: Date;
     @UpdateDateColumn()
     updatedAt: Date;
+
+
 }
