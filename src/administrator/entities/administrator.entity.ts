@@ -28,7 +28,7 @@ export class AdministratorEntity {
     @UpdateDateColumn()
     updatedAt: Date;
 
-    @OneToOne(() => UserEntity)
+    @OneToOne(() => UserEntity, user => user.administrator)
     @JoinColumn()
     user: UserEntity;
 

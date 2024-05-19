@@ -16,7 +16,7 @@ export const dataSourceOptions: DataSourceOptions = {
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
   entities: [UserEntity,DoctorEntity,PatientEntity,AdministratorEntity,AppointmentEntity],
-  logging: true,
+  logging: false,
   synchronize: true
 };
 

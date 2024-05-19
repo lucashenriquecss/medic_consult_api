@@ -1,14 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { PatientsService } from './patients.service';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
+import { PatientEntity } from './entities/patient.entity';
+import { RolesGuard } from 'src/utils/common/jwt/roles.guard';
+import { JwtAuthGuard } from 'src/utils/common/jwt/jwt-auth.guard';
+import { Role } from 'src/utils/common/jwt/roles.decorator';
+import { Roles } from 'src/utils/common/user-roles.enum';
 
 @Controller('patients')
 export class PatientsController {
   constructor(private readonly patientsService: PatientsService) {}
 
+  @UseGuards(JwtAuthGuard,RolesGuard)
+  @Role(Roles.PATIENT)
   @Post()
-  create(@Body() createPatientDto: CreatePatientDto) {
+  async create(@Body() createPatientDto: CreatePatientDto): Promise<PatientEntity> {
     return this.patientsService.create(createPatientDto);
   }
 

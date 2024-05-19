@@ -38,7 +38,7 @@ export class DoctorEntity {
     @UpdateDateColumn()
     updatedAt: Date;
 
-    @OneToOne(() => UserEntity)
+    @OneToOne(() => UserEntity, user => user.doctor)
     @JoinColumn()
     user: UserEntity;
 
