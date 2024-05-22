@@ -9,7 +9,11 @@ export class AdministratorController {
 
   @Post()
   create(@Body() createAdministratorDto: CreateAdministratorDto) {
-    return this.administratorService.create(createAdministratorDto);
+    try {
+      return this.administratorService.create(createAdministratorDto);
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   @Get()
