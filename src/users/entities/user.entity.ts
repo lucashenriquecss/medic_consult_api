@@ -16,12 +16,15 @@ import {
 export class UserEntity {
     @PrimaryGeneratedColumn()
     id: number;
-    @Column()
+    @Column({ unique: true })
     username: string;
     @Column({ unique: true })
     email: string;
     @Column()
     password: string;
+    @Column({default: [true]})
+    active: boolean;
+
     @Column({ type: 'enum', enum: Roles, default: [Roles.PATIENT] })
     roles: Roles[];
     @CreateDateColumn()

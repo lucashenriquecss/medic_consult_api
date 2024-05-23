@@ -20,8 +20,6 @@ export class AdministratorEntity {
     name: string;
     @Column()
     phone: string;
-    @Column()
-    active: boolean;
 
     @CreateDateColumn()
     createdAt: Date;

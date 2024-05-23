@@ -44,7 +44,7 @@ export class UsersService {
   async findOne(id: number) {
     try {
       
-      return await this.userRepository.findOne({ where: { id }, relations: ['patient'], });
+      return await this.userRepository.findOne({ where: { id }, relations: ['patient','patient.appointments','doctor', 'doctor.appointments'], });
     } catch (error) {
       console.log(error)
     }

@@ -28,8 +28,6 @@ export class DoctorEntity {
     @Column()
     phone: string;
     @Column()
-    active: boolean;
-    @Column()
     consultation_hours_from: Date;
     @Column()
     consultation_hours_to: Date;
