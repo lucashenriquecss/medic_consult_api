@@ -50,19 +50,28 @@ export class PatientsService {
     
   }
 
-  findAll() {
-    return `This action returns all patients`;
+  async findAll(params) {
+
+    const where = {}
+    if(params.id) where['id'] = params.id
+
+    if(params.cpf) where['cpf'] = params.cpf
+    if(params.name) where['name'] = params.name
+    if(params.city) where['city'] = params.city
+    if(params.gender) where['gender'] = params.gender
+    if(params.phone) where['phone'] = params.phone
+
+    
+    const resultPatient =  await this.patientRepository.find({where});
+    return resultPatient;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} patient`;
+  async update(id: number, updatePatientDto: UpdatePatientDto) {
+  
+    return await this.patientRepository.update(id,updatePatientDto);
   }
 
-  update(id: number, updatePatientDto: UpdatePatientDto) {
-    return `This action updates a #${id} patient`;
-  }
-
-  remove(id: number) {
+  remove(id: number) { //todo verificar se necessario
     return `This action removes a #${id} patient`;
   }
 }
