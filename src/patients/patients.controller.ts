@@ -18,6 +18,7 @@ export class PatientsController {
   async create(@Body() createPatientDto: CreatePatientDto): Promise<PatientEntity> {
     return this.patientsService.create(createPatientDto);
   }
+  
   @UseGuards(JwtAuthGuard,RolesGuard)
   @Role(Roles.PATIENT,Roles.ADMIN,Roles.DOCTOR)
   @Get()
