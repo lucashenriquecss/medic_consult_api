@@ -7,6 +7,8 @@ import { PatientsModule } from './patients/patients.module';
 import { AppointmentModule } from './appointment/appointment.module';
 import { AdministratorModule } from './administrator/administrator.module';
 import { AuthModule } from './auth/auth.module';
+import { CronService } from './cron/cron.service';
+import { NotificationModule } from './notification/notification.module';
 
 
 @Module({
@@ -17,8 +19,9 @@ import { AuthModule } from './auth/auth.module';
     PatientsModule,
     AppointmentModule,
     AdministratorModule,
-    AuthModule],
+    AuthModule,
+    NotificationModule],
   controllers: [],
-  providers: [],
+  providers: [CronService],
 })
 export class AppModule {}

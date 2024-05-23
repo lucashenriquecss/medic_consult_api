@@ -21,6 +21,9 @@ export class AppointmentEntity {
 
     @Column()
     appointment_date:Date;
+
+    @Column()
+    hash: string;
     
     @CreateDateColumn()
     createdAt: Date;
