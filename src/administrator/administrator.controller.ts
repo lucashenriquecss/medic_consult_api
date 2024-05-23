@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } from '@nestjs/common';
 import { AdministratorService } from './administrator.service';
 import { CreateAdministratorDto } from './dto/create-administrator.dto';
 import { UpdateAdministratorDto } from './dto/update-administrator.dto';
@@ -20,6 +20,20 @@ export class AdministratorController {
     } catch (error) {
       console.log(error)
     }
+  }
+
+  @UseGuards(JwtAuthGuard,RolesGuard)
+  @Role(Roles.ADMIN)
+  @Get()
+  async findAll(@Query() params) {
+    return this.administratorService.findAll(params);
+  }
+
+  @UseGuards(JwtAuthGuard,RolesGuard)
+  @Role(Roles.ADMIN)
+  @Patch(':id')
+ async update(@Param('id') id: string, @Body() updateAdminDto: CreateAdministratorDto) {
+    return this.administratorService.update(+id, updateAdminDto);
   }
 
 }

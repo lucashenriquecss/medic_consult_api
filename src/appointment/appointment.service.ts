@@ -60,19 +60,23 @@ export class AppointmentService {
   }
   }
 
-  findAll() {
-    return `This action returns all appointment`;
+  async findAll(params){
+    const where = {}
+    if(params.id) where['id'] = params.id
+
+    if(params.status) where['status'] = params.status
+    if(params.doctorId) where['doctorId'] = params.doctorId
+    if(params.patientId) where['patientId'] = params.patientId
+    
+    const resultAppointment =  await this.appointmentRepository.find({where});
+    return resultAppointment;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} appointment`;
+ 
+
+  async update(id: number, updateAppointmentDto: UpdateAppointmentDto) {
+    return await this.appointmentRepository.update(id,updateAppointmentDto);
   }
 
-  update(id: number, updateAppointmentDto: UpdateAppointmentDto) {
-    return `This action updates a #${id} appointment`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} appointment`;
-  }
+  
 }

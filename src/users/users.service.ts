@@ -41,10 +41,17 @@ export class UsersService {
     return resultCreateUser;
   }
 
-  async findOne(id: number) {
+  async findOne(id: number,params) {
     try {
-      
-      return await this.userRepository.findOne({ where: { id }, relations: ['patient','patient.appointments','doctor', 'doctor.appointments'], });
+      const where = {}
+
+      if(params.id) where['id'] = id
+  
+      if(params.username) where['username'] = params.username
+      if(params.email) where['email'] = params.email
+      if(params.roles) where['roles'] = params.roles
+
+      return await this.userRepository.findOne({ where, relations: ['patient','patient.appointments','doctor', 'doctor.appointments'], });
     } catch (error) {
       console.log(error)
     }
@@ -52,12 +59,10 @@ export class UsersService {
   async findOneEmail(email: string): Promise<UserEntity | undefined> {
     return await this.userRepository.findOne({ where: { email } });
   }
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    return await this.userRepository.update(id,updateUserDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
-  }
+
 
 }

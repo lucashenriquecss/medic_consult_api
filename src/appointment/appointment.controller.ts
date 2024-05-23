@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } from '@nestjs/common';
 import { AppointmentService } from './appointment.service';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
 import { UpdateAppointmentDto } from './dto/update-appointment.dto';
@@ -19,18 +19,17 @@ export class AppointmentController {
     return this.appointmentService.create(createAppointmentDto);
   }
 
+  @UseGuards(JwtAuthGuard,RolesGuard)
+  @Role(Roles.PATIENT,Roles.ADMIN,Roles.DOCTOR)
   @Get()
-  findAll() {
-    return this.appointmentService.findAll();
+  async findAll(@Query() params) {
+    return this.appointmentService.findAll(params);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.appointmentService.findOne(+id);
-  }
-
+  @UseGuards(JwtAuthGuard,RolesGuard)
+  @Role(Roles.PATIENT,Roles.ADMIN,Roles.DOCTOR)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAppointmentDto: UpdateAppointmentDto) {
+ async update(@Param('id') id: string, @Body() updateAppointmentDto: UpdateAppointmentDto) {
     return this.appointmentService.update(+id, updateAppointmentDto);
   }
 
