@@ -5,6 +5,7 @@ import { UserEntity } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { hashPassword } from 'src/utils/common/jwt/crypt';
+import { sendMail } from 'src/utils/send-email';
 
 
 @Injectable()
@@ -29,6 +30,14 @@ export class UsersService {
       };
 
       let resultCreateUser =  this.userRepository.create(newUserDto);
+
+      await sendMail({
+        to: createUserDto.email,
+        subject: 'Medic Consult',
+        body: `Olá ${name}, conta  foi realizado com sucesso!`,
+      
+      });
+
       return await this.userRepository.save(resultCreateUser);
      
     } catch (error) {

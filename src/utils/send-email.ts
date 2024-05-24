@@ -20,6 +20,7 @@ export  class sendMailDTO  {
 
 export const sendMail = async (sendMailDTO : sendMailDTO) =>{
     try {
+        
         const email = {
             from: `"Medic" <emailcolocar>`,
             // replyTo: ,
@@ -29,6 +30,7 @@ export const sendMail = async (sendMailDTO : sendMailDTO) =>{
             date: new Date(),
         }
         await transporter.sendMail(email);
+
     } catch (error) {
         console.log(error);
     }

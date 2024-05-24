@@ -8,6 +8,7 @@ import { DoctorEntity } from 'src/doctors/entities/doctor.entity';
 import { PatientEntity } from 'src/patients/entities/patient.entity';
 import { Roles } from 'src/utils/common/user-roles.enum';
 import { UserEntity } from 'src/users/entities/user.entity';
+import { sendMail } from 'src/utils/send-email';
 
 @Injectable()
 export class AppointmentService {
@@ -51,6 +52,19 @@ export class AppointmentService {
       ...newAppointmentDto,
       doctor: doctor,
       patient: patient,
+    });
+
+    await sendMail({
+      to: patient.user.email,
+      subject: 'Medic Chat - marcação de consulta',
+      body: `Olá ${patient.name}, seu agendamento foi realizado com sucesso!`,
+    });
+
+    await sendMail({
+      to: doctor.user.email,
+      subject: 'Medic Chat - marcação de consulta',
+      body: `Olá ${doctor.name}, possui agendamento novo!`,
+    
     });
 
     return await this.appointmentRepository.save(appointment);

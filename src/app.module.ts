@@ -8,7 +8,6 @@ import { AppointmentModule } from './appointment/appointment.module';
 import { AdministratorModule } from './administrator/administrator.module';
 import { AuthModule } from './auth/auth.module';
 import { CronService } from './cron/cron.service';
-import { NotificationModule } from './notification/notification.module';
 
 
 @Module({
@@ -19,8 +18,7 @@ import { NotificationModule } from './notification/notification.module';
     PatientsModule,
     AppointmentModule,
     AdministratorModule,
-    AuthModule,
-    NotificationModule],
+    AuthModule],
   controllers: [],
   providers: [CronService],
 })

@@ -21,6 +21,15 @@ export class AppointmentEntity {
 
     @Column()
     appointment_date:Date;
+    
+    @Column({default:[true]})
+    booking_notification: boolean;
+
+    @Column({default:[false]})
+    notificatio_before: boolean;
+
+    @Column({default:[false]})
+    notification_day: boolean;
 
     @Column()
     hash: string;
