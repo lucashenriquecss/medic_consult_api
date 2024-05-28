@@ -2,10 +2,10 @@
 import nodemailer from 'nodemailer';
 
 let transporter = nodemailer.createTransport({
-    service:"",// ex: gmail
+    service: process.env.SECRET_SERVICE_NOTIFICATION,// ex: gmail
     auth:{
-        user:"", //email
-        pass:"" //token
+        user: process.env.SECRET_MAIN_NOTIFICATION, //email
+        pass: process.env.SECRET_PASS_NOTIFICATION //token
     }
 });
 
@@ -22,7 +22,7 @@ export const sendMail = async (sendMailDTO : sendMailDTO) =>{
     try {
         
         const email = {
-            from: `"Medic" <emailcolocar>`,
+            from: `"Medic" <${process.env.SECRET_MAIN_NOTIFICATION}>`,
             // replyTo: ,
             subject: sendMailDTO.subject,
             to: sendMailDTO.to,

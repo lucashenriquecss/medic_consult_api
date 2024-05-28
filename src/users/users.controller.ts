@@ -7,7 +7,6 @@ import { JwtAuthGuard } from 'src/utils/common/jwt/jwt-auth.guard';
 import { RolesGuard } from 'src/utils/common/jwt/roles.guard';
 import { Roles } from 'src/utils/common/user-roles.enum';
 import { Role } from 'src/utils/common/jwt/roles.decorator';
-
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -28,6 +27,7 @@ export class UsersController {
   @Role(Roles.ADMIN,Roles.PATIENT,Roles.DOCTOR)
   @Get(':id')
   async findOne(@Param('id') id: string, @Query() params) {
+
     return this.usersService.findOne(+id,params);
   }
   
