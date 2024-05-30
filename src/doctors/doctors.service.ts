@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
 import { DoctorEntity } from './entities/doctor.entity';
@@ -42,27 +42,40 @@ export class DoctorsService {
 
       return await this.doctorRepository.save(resultCreateDoctor);
     } catch (error) {
-      console.log(error)
+      throw new HttpException(error, HttpStatus.BAD_REQUEST);
+
     }
   }
 
   async findAll(params){
-    const where = {}
-    if(params.id) where['id'] = params.id
+    try {
+      const where = {}
+      if(params.id) where['id'] = params.id
 
-    if(params.crm) where['crm'] = params.crm
-    if(params.name) where['name'] = params.name
-    if(params.specialty) where['specialty'] = params.specialty
-    if(params.phone) where['phone'] = params.phone
+      if(params.crm) where['crm'] = params.crm
+      if(params.name) where['name'] = params.name
+      if(params.specialty) where['specialty'] = params.specialty
+      if(params.phone) where['phone'] = params.phone
 
+      
+      const resultDoctor =  await this.doctorRepository.find({where});
+      return resultDoctor;
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.BAD_REQUEST);
+
+    }
     
-    const resultDoctor =  await this.doctorRepository.find({where});
-    return resultDoctor;
   }
 
 
   async update(id: number, updateDoctorDto: UpdateDoctorDto) {
-    return await this.doctorRepository.update(id,updateDoctorDto);
+    try {
+      
+      return await this.doctorRepository.update(id,updateDoctorDto);
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.BAD_REQUEST);
+
+    }
   }
 
   remove(id: number) {

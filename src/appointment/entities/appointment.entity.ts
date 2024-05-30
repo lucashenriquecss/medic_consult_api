@@ -26,7 +26,7 @@ export class AppointmentEntity {
     booking_notification: boolean;
 
     @Column({default:[false]})
-    notificatio_before: boolean;
+    notification_before: boolean;
 
     @Column({default:[false]})
     notification_day: boolean;

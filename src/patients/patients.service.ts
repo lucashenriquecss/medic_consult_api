@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -24,7 +24,8 @@ export class PatientsService {
       const isValid = await this.userRepository.findOne({where:{id:createPatientDto.userId}});
 
     if(!isValid && !isValid.roles.includes(Roles.PATIENT)){
-      throw new Error('User  login is not a patient');
+      throw new HttpException('User  login is not a patient', HttpStatus.NOT_ACCEPTABLE);
+
     }
 
     const newPatientDto: CreatePatientDto = {
@@ -45,30 +46,39 @@ export class PatientsService {
 
     return await this.patientRepository.save(resultCreatePatient);
     } catch (error) {
-      console.log(error)
+      throw new HttpException(error, HttpStatus.BAD_REQUEST);
     }
     
   }
 
   async findAll(params) {
+    try {
+      const where = {}
+      if(params.id) where['id'] = params.id
+  
+      if(params.cpf) where['cpf'] = params.cpf
+      if(params.name) where['name'] = params.name
+      if(params.city) where['city'] = params.city
+      if(params.gender) where['gender'] = params.gender
+      if(params.phone) where['phone'] = params.phone
+  
+      
+      const resultPatient =  await this.patientRepository.find({where});
+      return resultPatient;
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.BAD_REQUEST);
 
-    const where = {}
-    if(params.id) where['id'] = params.id
-
-    if(params.cpf) where['cpf'] = params.cpf
-    if(params.name) where['name'] = params.name
-    if(params.city) where['city'] = params.city
-    if(params.gender) where['gender'] = params.gender
-    if(params.phone) where['phone'] = params.phone
-
-    
-    const resultPatient =  await this.patientRepository.find({where});
-    return resultPatient;
+    }
+   
   }
 
   async update(id: number, updatePatientDto: UpdatePatientDto) {
-  
-    return await this.patientRepository.update(id,updatePatientDto);
+    try {
+      
+      return await this.patientRepository.update(id,updatePatientDto);
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.BAD_REQUEST);
+    }
   }
 
   remove(id: number) { //todo verificar se necessario
