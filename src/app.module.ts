@@ -8,7 +8,9 @@ import { AppointmentModule } from './appointment/appointment.module';
 import { AdministratorModule } from './administrator/administrator.module';
 import { AuthModule } from './auth/auth.module';
 import { CronService } from './cron/cron.service';
-
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+import { ChatGateway } from './chat.gateway';
 
 @Module({
   imports: [
@@ -20,6 +22,6 @@ import { CronService } from './cron/cron.service';
     AdministratorModule,
     AuthModule],
   controllers: [],
-  providers: [CronService],
+  providers: [CronService,ChatGateway]
 })
 export class AppModule {}

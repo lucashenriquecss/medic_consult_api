@@ -7,13 +7,28 @@ import { JwtAuthGuard } from 'src/utils/common/jwt/jwt-auth.guard';
 import { Role } from 'src/utils/common/jwt/roles.decorator';
 import { Roles } from 'src/utils/common/user-roles.enum';
 import { AppointmentEntity } from './entities/appointment.entity';
+import { ApiTags, ApiOperation, ApiBody } from '@nestjs/swagger';
 
 @Controller('appointment')
+@ApiTags('Appointment')
+
 export class AppointmentController {
   constructor(private readonly appointmentService: AppointmentService) {}
 
   @UseGuards(JwtAuthGuard,RolesGuard)
+  
   @Role(Roles.PATIENT,Roles.ADMIN)
+  @ApiOperation({ summary: 'Create appointment' })
+  @ApiBody({ schema: { type: 'object', properties: {  
+      status: {type: 'Status[]'},
+     patientId:{ type:'number'},
+     doctorId:{ type:'number'},
+     appointment_date:{ type:'Date'},
+     booking_notification:{type:'boolean'},
+     notificatio_before:{type:'boolean'},
+     notification_day:{type:'boolean'},
+     hash:{type:'string'}, 
+    } } })
   @Post()
   async create(@Body() createAppointmentDto: CreateAppointmentDto): Promise<AppointmentEntity> {
 
